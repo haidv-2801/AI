@@ -1,80 +1,91 @@
-from collections import defaultdict
-from functools import reduce
-import pretty_table_config as ptb
-
-# Các tham số được sửa
-FILE_IN = 'datain.txt'
-BEGIN_COST = 20
-# Các tham số được sửa
-
-start = None
-end = None
-graph = defaultdict(list)
-parent = {}
-MAX_SIZE = int(1E6)
-res = []
+from queue import PriorityQueue
 
 
-def f(node: tuple) -> str:  # (a,b) -> ba
-    return str(str(node[1]) + '_' + str(node[0]))
+# Creating Base Class
+class State(object):
+    def __init__(self, value, parent, start=0, goal=0):
+        self.children = []
+        self.parent = parent
+        self.value = value
+        self.dist = 0
+        if parent:
+            self.start = parent.start
+            self.goal = parent.goal
+            self.path = parent.path[:]
+            self.path.append(value)
+
+        else:
+            self.path = [value]
+            self.start = start
+            self.goal = goal
+
+    def GetDistance(self):
+        pass
+
+    def CreateChildren(self):
+        pass
 
 
-def format_queue(queue):  # [[],[]] -> []
-    if len(queue) > 0:
-        return reduce(lambda a, b: a + b, queue)
-    return []
+# Creating subclass
+class State_String(State):
+    def __init__(self, value, parent, start=0, goal=0):
+        super(State_String, self).__init__(value, parent, start, goal)
+        self.dist = self.GetDistance()
+
+    def GetDistance(self):
+        if self.value == self.goal:
+            return 0
+        dist = 0
+        for i in range(len(self.goal)):
+            letter = self.goal[i]
+            dist += abs(i - self.value.index(letter))
+        return dist
+
+    def CreateChildren(self):
+        if not self.children:
+            for i in range(len(self.goal) - 1):
+                val = self.value
+                val = val[:i] + val[i + 1] + val[i] + val[i + 2:]
+                child = State_String(val, self)
+                self.children.append(child)
 
 
-def print_path(st, ed):
-    if parent[ed] != st:
-        print_path(st, parent[ed])
-    res.append(ed)
+# Creating a class that hold the final magic
+class A_Star_Solver:
+    def __init__(self, start, goal):
+        self.path = []
+        self.vistedQueue = []
+        self.priorityQueue = PriorityQueue()
+        self.start = start
+        self.goal = goal
+
+    def Solve(self):
+        startState = State_String(self.start, 0, self.start, self.goal)
+
+        count = 0
+        self.priorityQueue.put((0, count, startState))
+        while (not self.path and self.priorityQueue.qsize()):
+            closesetChild = self.priorityQueue.get()[2]
+            closesetChild.CreateChildren()
+            self.vistedQueue.append(closesetChild.value)
+            for child in closesetChild.children:
+                if child.value not in self.vistedQueue:
+                    count += 1
+                    if not child.dist:
+                        self.path = child.path
+                        break
+                    self.priorityQueue.put((child.dist, count, child))
+        if not self.path:
+            print("Goal Of  is not possible !" + self.goal)
+        return self.path
 
 
-def make_graph():
-    global start, end, graph
-    with open(FILE_IN) as f:
-        start, end = [str(x) for x in next(f).split()]
-        for line in f:
-            a, b, cost = [str(x) for x in line.split()]
-            graph[a].append((int(cost), b))
-        for key in graph:
-            graph[key] = sorted(graph[key])
-
-
-def execute(st, ed):
-    tb = ptb.get_table(['Phat trien TT', 'Trang thai ke', 'Danh sach L1', 'Danh sach L'])
-
-    print("\nHill Climbing Search:")
-    path = [(BEGIN_COST, st)]
-    queue = [path.copy()]
-    while queue:  # queue: [[(cost),(to)], [(),()],]
-        path = queue.pop(0)  # path: [(),()]
-        path_front = path.pop(0)  # path_front: (cost, to)
-        if len(path) > 0:  # not insert [] to queue
-            queue.insert(0, path)
-
-        sort = sorted(graph[path_front[1]])
-        mid = 'TTKT Dung' if path_front[1] == ed else ', '.join(f(x) for x in graph[path_front[1]])
-        L1 = '' if path_front[1] == ed else ', '.join(f(x) for x in sort)
-        L = '' if path_front[1] == ed else ', '.join(f(x) for x in (sort + format_queue(queue)))
-        tb.add_row([f(path_front), mid, L1, L])
-
-        if path_front[1] == ed:
-            print(tb)
-            res.append(st)
-            print_path(st, ed)
-            print('->'.join(res))
-            return
-        next_path = []
-        for next in graph[path_front[1]]:
-            parent[next[1]] = path_front[1]
-            next_path.append(next)
-        if len(next_path) > 0:
-            queue.insert(0, next_path)
-    print("Khong di duoc")
-
-
-if __name__ == '__main__':
-    make_graph()
-    execute(start, end)
+# Calling all the existing stuffs
+if __name__ == "__main__":
+    start1 = "hema"
+    goal1 = "mahe"
+    print("Starting....")
+    a = A_Star_Solver(start1, goal1)
+    a.Solve()
+    for i in range(len(a.path)):
+        print("{0}){1}".format(i, a.path[i]))
