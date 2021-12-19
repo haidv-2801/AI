@@ -1,6 +1,6 @@
 from queue import PriorityQueue
 from collections import defaultdict
-import pretty_table_config as ptb
+from AI.pretty_table_config import get_table
 
 # Các tham số được sửa
 FILE_IN = 'datain.txt'

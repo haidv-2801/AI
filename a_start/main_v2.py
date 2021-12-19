@@ -1,6 +1,6 @@
 from collections import defaultdict
 from functools import reduce
-import pretty_table_config as ptb
+from AI.pretty_table_config import get_table
 
 #Các tham số được sửa
 FILE_IN = 'datain.txt'
@@ -53,7 +53,7 @@ def make_graph():
 
 
 def execute(st, ed):
-    tb = ptb.get_table(['TT', 'TTK', 'k(u,v)', 'h(v)', 'g(v)', 'f(v)', 'Danh sach L'])
+    tb = get_table(['TT', 'TTK', 'k(u,v)', 'h(v)', 'g(v)', 'f(v)', 'Danh sach L'])
     ct = 0
     cost = 0
     queue = [(f[st], st)]
