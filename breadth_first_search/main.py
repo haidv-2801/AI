@@ -37,16 +37,19 @@ def execute(st, ed):
     visited = {}
     while queue:
         front = queue.pop(0)
-        mid = 'TTKT - DUNG' if front == ed else ', '.join(str(x) for x in graph[front])
-        tb.add_row([str(front), mid, ', '.join(str(x) for x in (queue + graph[front]))])
+        mid = ', '.join(str(x) for x in graph[front])
 
         if front == ed:
+            tb.add_row([front, "TTKT - DUNG", ""])
             print(tb)
             print("Duong di:")
             res.append(st)
             print_path(st, ed)
             print('->'.join(res))
             return
+
+        tb.add_row([str(front), mid, ', '.join(str(x) for x in (queue + graph[front]))])
+
         for i in graph[front]:
             if i not in visited:
                 visited[i] = 1
