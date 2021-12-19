@@ -9,7 +9,8 @@ FILE_IN = 'datain.txt'
 source = None
 target = None
 graph = defaultdict(list)
-v = 10000
+visited = {}
+
 
 def make_graph():
     global source, target, graph
@@ -17,25 +18,33 @@ def make_graph():
         source, target = [str(x) for x in next(f).split()]
         for line in f:
             a, b, cost = [str(x) for x in line.split()]
-            graph[a].append((b, int(cost)))
-            graph[b].append((a, int(cost)))
+            graph[a].append((int(cost), b))
+        # for i in graph:
+        #     i = sorted(i)
 
-def best_first_search(source, target, n):
-    visited = [0] * n
-    visited = True
-    pq = PriorityQueue()
-    pq.put((0, source))
-    while pq.empty() == False:
-        u = pq.get()[1]
-        # Displaying the path having lowest cost
-        print(u, end=" ")
-        if u == target:
-            break
+def f(node: tuple) -> str:  # (a,b) -> ba
+    return str(str(node[1]) + '_' + str(node[0]))
 
-        for v, c in graph[u]:
-            if visited[v] == False:
-                visited[v] = True
-                pq.put((c, v))
+def best_first_search(source, target):
+    tb = ptb.get_table(["Phat trien TT", "Trang thai ke", "Danh sach L"])
+    pq = [(20, source)]
+    while pq:
+        u = pq[0]
+        pq = pq[1:]
+
+        if u[1] == target:
+            tb.add_row([f(u), "TTKT - Dung", ''])
+            print(tb)
+            return
+        l = sorted(pq + graph[u[1]])
+        l = ', '.join([f(x) for x in l])
+        l1 = ', '.join([f(x) for x in graph[u[1]]])
+        tb.add_row([f(u), l1, l])
+        pq = sorted(pq + graph[u[1]])
+    print("\nKhong di duoc")
+
 
 if __name__ == '__main__':
-    best_first_search(source, target, v)
+    print("Best First Search")
+    make_graph()
+    best_first_search(source, target)
