@@ -4,6 +4,7 @@ import pretty_table_config as ptb
 
 # Các tham số được sửa
 FILE_IN = 'datain.txt'
+BEGIN_COST = 20
 # Các tham số được sửa
 
 source = None
@@ -22,16 +23,17 @@ def make_graph():
         # for i in graph:
         #     i = sorted(i)
 
+
 def f(node: tuple) -> str:  # (a,b) -> ba
     return str(str(node[1]) + '_' + str(node[0]))
 
+
 def best_first_search(source, target):
     tb = ptb.get_table(["Phat trien TT", "Trang thai ke", "Danh sach L"])
-    pq = [(20, source)]
+    pq = [(BEGIN_COST, source)]
     while pq:
         u = pq[0]
         pq = pq[1:]
-
         if u[1] == target:
             tb.add_row([f(u), "TTKT - Dung", ''])
             print(tb)
