@@ -1,5 +1,5 @@
 from collections import defaultdict
-from AI.pretty_table_config import get_table
+import pretty_table_config as ptb
 
 # Các tham số được sửa
 FILE_IN = 'datain.txt'
@@ -29,7 +29,7 @@ def make_graph(path):
 
 
 def execute(st, ed):
-    tb = get_table(['Phat trien TT', 'Trang thai ke', 'Danh sach L'])
+    tb = ptb.get_table(['Phat trien TT', 'Trang thai ke', 'Danh sach L'])
     print("%s %40s" % ("\n", "Depth First Search"))
     print("Quan he:")
     stack = [st]

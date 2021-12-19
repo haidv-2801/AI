@@ -1,6 +1,6 @@
 from collections import defaultdict
 from functools import reduce
-from AI.pretty_table_config import get_table
+import pretty_table_config as ptb
 
 #Các tham số được sửa
 FILE_IN = 'datain.txt'
@@ -53,7 +53,7 @@ def make_graph():
 
 
 def bfs(st, ed):
-    tb = get_table(['TT', 'TTK', 'k(u,v)', 'h(v)', 'g(v)', 'f(v)', 'DS L1', 'Danh sach L'])
+    tb = ptb.get_table(['TT', 'TTK', 'k(u,v)', 'h(v)', 'g(v)', 'f(v)', 'DS L1', 'Danh sach L'])
     ct = 0
     cost = 0
     path = [(f[st], st)]

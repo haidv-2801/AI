@@ -1,6 +1,6 @@
 from collections import defaultdict
 from functools import reduce
-from AI.pretty_table_config import get_table
+import pretty_table_config as ptb
 
 # Các tham số được sửa
 FILE_IN = 'datain.txt'
@@ -43,7 +43,7 @@ def make_graph():
 
 
 def execute(st, ed):
-    tb = get_table(['Phat trien TT', 'Trang thai ke', 'Danh sach L1', 'Danh sach L'])
+    tb = ptb.get_table(['Phat trien TT', 'Trang thai ke', 'Danh sach L1', 'Danh sach L'])
 
     print("\nHill Climbing Search:")
     path = [(BEGIN_COST, st)]
