@@ -4,7 +4,7 @@ import pretty_table_config as ptb
 
 # Các tham số được sửa
 FILE_IN = ptb.FILE_IN
-BEGIN_COST = 20
+BEGIN_COST = 30
 # Các tham số được sửa
 
 source = None

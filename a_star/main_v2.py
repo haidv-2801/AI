@@ -55,25 +55,22 @@ def make_graph():
 def execute(st, ed):
     tb = ptb.get_table(['TT', 'TTK', 'k(u,v)', 'h(v)', 'g(v)', 'f(v)', 'Danh sach L'])
     ct = 0
-    cost = 0
     queue = [(f[st], st)]
 
     while queue:
         front = queue.pop(0)
 
         if front[1] == ed:
-            cost = max(cost, f[front[1]])
             tb.add_row(
                 ['---\n' + str(front[1]), *['---'] * 4,
                  f'---\nTTKT, tim duoc duong\n di tam thoi, do dai {f[front[1]]}',
                  '---'])
-            ct += 1
-            if ct == count:
-                l = ', '.join([fm(x) for x in (queue)])
-                tb.add_row([*['---'] * 6, l])
-                print(tb)
-                print("nếu dích có cost bằng nhau chỉ viết 1 lần")
-                return
+
+            l = ', '.join([fm(x) for x in (queue)])
+            tb.add_row([*['---'] * 6, l])
+            print(tb)
+            return
+
         else:
             tb.add_row(['---\n' + str(front[1]), *['---'] * 6])
 
