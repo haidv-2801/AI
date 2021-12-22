@@ -9,7 +9,6 @@ FILE_IN = ptb.FILE_IN
 start = None
 end = None
 graph = defaultdict(list)
-count = 0
 k = {}
 h = {}
 g = {}
@@ -20,15 +19,8 @@ parent = []
 def fm(node: tuple) -> str:  # (a,b) -> ba
     return str(node[1]) + '_' + str(node[0])
 
-
-def format_queue(queue):  # [[],[]] -> []
-    if len(queue) > 0:
-        return reduce(lambda a, b: a + b, queue)
-    return []
-
-
 def make_graph():
-    global start, end, graph, k, h, g, f, count
+    global start, end, graph, k, h, g, f
     with open(FILE_IN) as fi:
         start, end = [str(x) for x in next(fi).split()]
         f[start] = 0
@@ -45,11 +37,10 @@ def make_graph():
             g[c] = 0
             k[(a, c)] = int(e)
             graph[a].append(c)
-            if c == end:
-                count += 1
         # sort cạnh kề
-        for i in graph:
-            graph[i] = sorted(graph[i])
+        # for i in graph:
+        #     graph[i] = sorted(graph[i])
+        # print(graph)
 
 
 def execute(st, ed):
@@ -74,15 +65,13 @@ def execute(st, ed):
         else:
             tb.add_row(['---\n' + str(front[1]), *['---'] * 6])
 
-        next_path = []
         for e in graph[front[1]]:
             g[e] = g[front[1]] + k[(front[1], e)]
             f[e] = g[e] + h[e]
-            next_path.append((f[e], e))
+            queue.append((f[e], e))
             tb.add_row(['', e, k[front[1], e], h[e], g[e], f[e], ' '])
 
-        if len(next_path) > 0:
-            queue = sorted(next_path.copy() + queue)
+        queue = sorted(queue)
         l = ', '.join([fm(x) for x in queue])
         tb.add_row([*[' '] * 6, l])
     print("Không đi được!")
