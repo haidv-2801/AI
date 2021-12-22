@@ -2,7 +2,7 @@ from collections import defaultdict
 import pretty_table_config as ptb
 
 # Các tham số được sửa
-FILE_IN = 'datain1.txt'
+FILE_IN = ptb.FILE_IN
 # Các tham số được sửa
 
 start, end = None, None
@@ -22,7 +22,7 @@ def make_graph(path):
     with open(path) as f:
         start, end = [str(x) for x in next(f).split()]
         for line in f:
-            a, b = [str(x) for x in line.split()]
+            a, w_a, b, w_b, cost = [str(x) for x in line.split()]
             graph[a].append(b)
     for key in graph:
         graph[key] = sorted(graph[key])

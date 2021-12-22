@@ -3,7 +3,7 @@ from functools import reduce
 import pretty_table_config as ptb
 
 #Các tham số được sửa
-FILE_IN = 'datain.txt'
+FILE_IN = ptb.FILE_IN
 #Các tham số được sửa
 
 start = None
