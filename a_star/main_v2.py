@@ -14,7 +14,7 @@ k = {}
 h = {}
 g = {}
 f = {}
-parent = {}
+parent = []
 
 
 def fm(node: tuple) -> str:  # (a,b) -> ba
@@ -59,7 +59,7 @@ def execute(st, ed):
 
     while queue:
         front = queue.pop(0)
-
+        parent.append(front[1])
         if front[1] == ed:
             tb.add_row(
                 ['---\n' + str(front[1]), *['---'] * 4,
@@ -67,8 +67,8 @@ def execute(st, ed):
                  '---'])
 
             l = ', '.join([fm(x) for x in (queue)])
-            tb.add_row([*['---'] * 6, l])
             print(tb)
+            print('->'.join(parent))
             return
 
         else:
