@@ -51,8 +51,8 @@ def execute(st, ed):
         tb.add_row([str(front), mid, ', '.join(str(x) for x in (queue + graph[front]))])
 
         for i in graph[front]:
-            if i not in visited:
-                visited[i] = 1
+            # if i not in visited:
+            #     visited[i] = 1
                 if i not in parent:
                     parent[i] = front
                 queue.append(i)
