@@ -4,7 +4,7 @@ import pretty_table_config as ptb
 
 # Các tham số được sửa
 FILE_IN = ptb.FILE_IN
-BEGIN_COST = 20
+BEGIN_COST = 30
 # Các tham số được sửa
 
 start = None
@@ -36,7 +36,7 @@ def make_graph():
     with open(FILE_IN) as f:
         start, end = [str(x) for x in next(f).split()]
         for line in f:
-            a, w_a, b, w_b, cost = [str(x) for x in line.split()]
+            a, w_a, b, cost, w_b  = [str(x) for x in line.split()]
             graph[a].append((int(cost), b))
         for key in graph:
             graph[key] = sorted(graph[key])

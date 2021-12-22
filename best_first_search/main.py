@@ -18,7 +18,7 @@ def make_graph():
     with open(FILE_IN) as f:
         source, target = [str(x) for x in next(f).split()]
         for line in f:
-            a, w_a, b, w_b, cost = [str(x) for x in line.split()]
+            a, w_a, b, cost, w_b  = [str(x) for x in line.split()]
             graph[a].append((int(cost), b))
         # for i in graph:
         #     i = sorted(i)
