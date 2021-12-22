@@ -49,8 +49,8 @@ def execute(st, ed):
 
         tb.add_row([str(top), mid, ' ,'.join(str(x) for x in (stack + graph[top]))[::-1]])
         for i in graph[top]:
-            if i not in visited:
-                visited[i] = 1
+            # if i not in visited:
+            #     visited[i] = 1
                 parent[i] = top
                 stack.append(i)
 

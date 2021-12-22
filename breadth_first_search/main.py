@@ -2,7 +2,7 @@ from collections import defaultdict
 import pretty_table_config as ptb
 
 # Các tham số được sửa
-FILE_IN = 'datain.txt'
+FILE_IN = 'datain1.txt'
 # Các tham số được sửa
 
 start, end = None, None
@@ -51,9 +51,10 @@ def execute(st, ed):
         tb.add_row([str(front), mid, ', '.join(str(x) for x in (queue + graph[front]))])
 
         for i in graph[front]:
-            if i not in visited:
-                visited[i] = 1
-                parent[i] = front
+            # if i not in visited:
+            #     visited[i] = 1
+                if i not in parent:
+                    parent[i] = front
                 queue.append(i)
 
     print('\nKhong tim thay!')
