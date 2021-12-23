@@ -24,8 +24,8 @@ def make_graph(path):
         for line in f:
             a, w_a, b, w_b, cost = [str(x) for x in line.split()]
             graph[a].append(b)
-    # for key in graph:
-    #     graph[key] = sorted(graph[key])
+    for key in graph:
+        graph[key] = sorted(graph[key])
 
 
 def execute(st, ed):
